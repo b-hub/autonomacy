@@ -1,0 +1,39 @@
+<html>
+<link rel="stylesheet" href="style.css">
+<body>
+<script src="jquery.min.js"></script>
+<script src="springy.js"></script>
+<script src="customspringyui.js"></script>
+<script>
+var graph = new Springy.Graph();
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#blueprints').springy({
+    graph: graph,
+    stiffness: 100.0,
+		repulsion: 400.0,
+		damping: 0.5,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+
+function main() {
+	var n = document.getElementById('n').value;
+	for (var i = 0; i < n; i++) {
+		graph.newNode({color: "blue", size: 10})
+	}
+}
+
+</script>
+
+<p>This is a test paragraph</p>
+<div id="holder">
+	<canvas id="blueprints" width="320" height="240"></canvas>
+	<div id="terminal"></div>
+</div>
+<input type="text" name="players" id="n">
+<button onclick="main()">Start</button>
+</body>
+</html>

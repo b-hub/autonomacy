@@ -1,0 +1,106 @@
+<html>
+<body>
+<script src="jquery.min.js"></script>
+<script src="springy.js"></script>
+<script src="customspringyui.js"></script>
+<script>
+var graph = new Springy.Graph();
+
+/*
+var dennis = graph.newNode({
+  label: 'Dennis',
+  ondoubleclick: function() { console.log("Hello!"); alert(graph.newEdge(graph.nodes[1], graph.nodes[7])); }
+});
+var michael = graph.newNode({label: 'michael'});
+var jessica = graph.newNode({label: 'Jessica'});
+var timothy = graph.newNode({label: 'Timothy'});
+var barbara = graph.newNode({label: 'Barbara'});
+var franklin = graph.newNode({label: 'Franklin'});
+var monty = graph.newNode({label: 'Monty'});
+var james = graph.newNode({label: 'James'});
+var bianca = graph.newNode({label: 'Bianca'});
+
+graph.newEdge(dennis, michael, {color: '#00A0B0', length: 5.0});
+graph.newEdge(michael, dennis, {color: '#6A4A3C'});
+graph.newEdge(michael, jessica, {color: '#CC333F', length: 10.0});
+graph.newEdge(jessica, barbara, {color: '#EB6841'});
+graph.newEdge(michael, timothy, {color: '#EDC951'});
+graph.newEdge(franklin, monty, {color: '#7DBE3C', length: 2.0});
+graph.newEdge(dennis, monty, {color: '#000000'});
+graph.newEdge(monty, james, {color: '#00A0B0', length: 10.0});
+graph.newEdge(barbara, timothy, {color: '#6A4A3C'});
+graph.newEdge(dennis, bianca, {color: '#CC333F'});
+graph.newEdge(bianca, monty, {color: '#EB6841'});
+*/
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    stiffness: 100.0,
+		repulsion: 400.0,
+		damping: 0.5,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+
+function testAttraction() {
+	edge = graph.edges[Math.round(Math.random() * graph.edges.length)];
+	if (edge && Math.random() <= edge.data.attraction) {
+		var x = edge.source;
+		var y = edge.target;
+		//graph.detachNode(x);
+		//graph.detachNode(y);
+		//graph.newEdge(x, y, {directional: false, color: "#00FF00", relationship: true});
+		graph.removeNode(x);
+		graph.removeNode(y);
+		console.log("Matched: " + x.id + " --> " + y.id + ", with attraction: " + edge.data.attraction);
+	} else if(edge && !edge.data.relationship) {
+		var tempCol = edge.data.color;
+		var tempWeight = edge.data.weight;
+		edge.data.color = "#FF0000";
+		edge.data.weight = 0.5;
+		window.setTimeout(function() {edge.data.color = tempCol; edge.data.weight = tempWeight;}, 300);
+		
+	}
+	
+	for (var i = 0; i < graph.edges.length; i++) {
+		if (!graph.edges[i].data.relationship) {
+			window.setTimeout(testAttraction, 300);
+			break;
+		}
+	}
+}
+
+function main() {
+	var n = document.getElementById('n').value;
+	for (var i = 0; i < n; i++) {
+		sex = Math.round(Math.random());
+		color = (sex == 1) ? "#0000FF" : "#AA0088";
+		graph.newNode({label: i, color: color , sex: sex, size: 8});
+	}
+	
+	for (var i = 0; i < n; i++) {
+		for (var j = i+1; j < n; j++) {
+			var x = graph.nodes[i];
+			var y = graph.nodes[j];
+			if ((x.data.sex != y.data.sex)) {
+				attraction = Math.random()
+				length = Math.pow(Math.round(1.0 + (1-attraction) * 7.0), 2);
+				graph.newEdge(x, y, {length: length, weight: 1 / length, attraction: Math.pow(attraction, 2), directional: false});
+				}
+			}
+		}
+	}
+	
+	testAttraction();
+}
+
+</script>
+
+<canvas id="springydemo" width="640" height="480"></canvas>
+<input type="text" name="players" id="n">
+<button onclick="main()">Start</button>
+</body>
+</html>

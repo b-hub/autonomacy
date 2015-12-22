@@ -1,0 +1,28 @@
+body {
+	background-color: #eeeeee;
+}
+
+canvas {
+	border: 1px solid #aaaaaa;
+	background-color: white;
+	margin: 5px;
+}
+
+#terminal {
+	height: 500px;
+	width: 400px;
+	overflow: auto;
+	background-color: white;
+	border: 1px solid #aaaaaa;
+	margin: 5px;
+}
+
+#holder {
+	width: 900px;
+	border: 1px solid #aaaaaa;
+	margin: auto;
+}
+
+p {
+	border: 1px solid black;
+}

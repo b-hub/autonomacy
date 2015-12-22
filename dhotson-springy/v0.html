@@ -1,0 +1,37 @@
+<html>
+<body>
+<script src="jquery.min.js"></script>
+<script src="springy.js"></script>
+<script src="customspringyui.js"></script>
+<script src="world.js"></script>
+<script>
+var graph = new Springy.Graph();
+
+jQuery(function(){
+  var springy = window.springy = jQuery('#springydemo').springy({
+    graph: graph,
+    stiffness: 100.0,
+		repulsion: 400.0,
+		damping: 0.5,
+    nodeSelected: function(node){
+      console.log('Node selected: ' + JSON.stringify(node.data));
+    }
+  });
+});
+
+function main() {
+	var n = document.getElementById('n').value;
+	var world = new World(graph);
+	for (var i = 0; i < n; i++) {
+		world.addSettlement();
+	}
+	start(world);
+}
+
+</script>
+
+<canvas id="springydemo" width="640" height="480"></canvas>
+<input type="text" name="players" id="n">
+<button onclick="main()">Start</button>
+</body>
+</html>

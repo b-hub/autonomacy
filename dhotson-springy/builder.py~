@@ -1,0 +1,56 @@
+
+class Quarry:
+	def __init__(self):
+		self.level = 0
+		self.maxLevel = 50
+	
+	def cost(level):
+		return (level * 8, level * 5, level * 10)
+	
+	def production(level):
+		return level / 2.0
+	
+	def levelUp(self):
+		self.level += 1
+		
+class Sawmill:
+	def __init__(self):
+		self.level = 0
+		self.maxLevel = 50
+	
+	def cost(level):
+		return (level * 10, level * 5, level * 8)
+	
+	def production(level):
+		return level / 2.0
+	
+	def levelUp(self):
+		self.level += 1
+		
+class Mine:
+	def __init__(self):
+		self.level = 0
+		self.maxLevel = 50
+	
+	def cost(level):
+		return (level * 10, level * 8, level * 5)
+	
+	def production(level):
+		return level / 2.0
+
+	def levelUp(self):
+		self.level += 1
+
+q = Quarry()
+s = Sawmill()
+m = Mine()
+
+
+		
+def build((q, s, m), res, time):
+	print q
+
+
+
+
+
